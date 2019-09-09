@@ -18,7 +18,6 @@ class App extends Component {
             robots: [],
             searchfield: ''
         }
-        console.log('1');
     }
 
     componentDidMount () {
