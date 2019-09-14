@@ -9,8 +9,8 @@ import { searchRobots } from './reducers';
 import * as serviceWorker from './serviceWorker';
 import 'tachyons';
 
-const logger = createLogger;
-const store = createStore(searchRobots)
+const logger = createLogger();
+const store = createStore(searchRobots, applyMiddleware(logger))
 
 ReactDOM.render(
     <Provider store={store} >
