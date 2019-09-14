@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { createLogger } from 'redux-logger';
+// redux-thunk looks to see if functions are returned rather than objects
 import thunkMiddleware from 'redux-thunk';
 import './index.css';
 import App from './containers/App';
-import { searchRobots } from './reducers';
+import { searchRobots, requestRobots } from './reducers';
 import * as serviceWorker from './serviceWorker';
 import 'tachyons';
 
 const logger = createLogger();
+
+const rootReducer = combineReducers({ searchRobots, requestRobots})
+
 const store = 
-  createStore(searchRobots, applyMiddleware(thunkMiddleware, logger))
+  createStore(rootReducer, applyMiddleware(thunkMiddleware, logger))
 
 ReactDOM.render(
     <Provider store={store} >

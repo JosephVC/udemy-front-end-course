@@ -8,17 +8,21 @@ import ErrorBoundry from '../components/ErrorBoundry';
 
 import './App.css'; 
 
-import { setSearchField } from '../actions';
+import { setSearchField, requestRobots } from '../actions';
 
 const mapStateToProps = state => {
     return {
-        searchField: state.searchField
+        searchField: state.searchRobots.searchField,
+        robots: state.requestRobots.robots,
+        isPending: state.requestRobots.isPending,
+        error: state.requestRobots.error
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+        onRequestRobots: () => requestRobots(dispatch)
     }
 }
 
@@ -27,37 +31,33 @@ const mapDispatchToProps = (dispatch) => {
 // unlike PROPS, which are simply things that come out of STATE
 
 class App extends Component {
-    constructor() {
-        super()
-        this.state = {
-            robots: []            
-        }
-    }
+// there are no more states because
+// robots are going to be returned from the props from onRequestRobots
+//, so we don't need the below
+    // constructor() {
+    //     super()
+    //     this.state = {
+    //         robots: []            
+    //     }
+    
 
-    componentDidMount () {
-        fetch('https://jsonplaceholder.typicode.com/users')
-          .then(response => response.json())
-          .then(users => this.setState({ robots: robots }));
-
+    componentDidMount() {
+       this.props.onRequestRobots();
     }
     
     render () {
-        const { robots } = this.state;
-        const { searchField, onSearchChange } = this.props;
+        const { searchField, onSearchChange, robots, isPending } = this.props;
         const filteredRobots = robots.filter(robot => {
           return robot.name.toLowerCase().includes(searchField.toLowerCase());
         })
-        return !robots.length ?
+        return !isPending ?
             <h1>Loading . . .</h1>: 
             (
-            
-                <div className='tc'>
-                    <h1 className='f2'>Robofriends</h1>
-                    <SearchBox searchChange={this.onSearchChange}/>
-                <   Scroll>
-                        <ErrorBoundry>
-                            <CardList robots={filteredRobots} />
-                        </ErrorBoundry>
+              <div className='tc'>
+                <h1 className='f2'>Robofriends</h1>
+                  <SearchBox searchChange={onSearchChange}/>
+                    <Scroll>
+                      <CardList robots={filteredRobots} />
                     </Scroll>
                 </div>
             );
