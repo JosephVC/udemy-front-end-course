@@ -5,16 +5,44 @@ import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
+
 import './App.css';
 
+const particlesOptions = {
+   
+    render(){
+        return (
+            <Particles 
+                params={{
+                    polygon: {
+                        enable: true,
+                        type: 'inside',
+                        move: {
+                            radius: 10
+                        },
+                        url: 'path/to/svg.svg'
+                    }
+                }} />
+        );
+
+ 
+    }
+}
+
+    
 class App extends Component{
   render() {
     return (
       <div className="App">
+        <Particles 
+        params = {particlesOptions}
+        />
+            
         <Navigation />
         <Logo /> 
-          {/* {<ImageLinkForm />
-         <FaceRecognition /> */} 
+        <Rank />
+        <ImageLinkForm />
+         {/* {<FaceRecognition /> */}
       </div>
     )
   }
