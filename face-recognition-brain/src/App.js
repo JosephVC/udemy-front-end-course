@@ -9,32 +9,22 @@ import Rank from './components/Rank/Rank';
 import './App.css';
 
 const particlesOptions = {
-   
-    render(){
-        return (
-            <Particles 
-                params={{
-                    polygon: {
-                        enable: true,
-                        type: 'inside',
-                        move: {
-                            radius: 10
-                        },
-                        url: 'path/to/svg.svg'
-                    }
-                }} />
-        );
-
- 
-    }
+   particles: {
+     line_linked: {
+       shadow: {
+         enabled: true,
+         color: "#3CA9D1",
+         blur: 5
+       }
+     }
+   }
 }
-
-    
+       
 class App extends Component{
   render() {
     return (
       <div className="App">
-        <Particles 
+        <Particles className="particles"
         params = {particlesOptions}
         />
             
